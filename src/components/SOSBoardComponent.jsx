@@ -15,7 +15,7 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
             setScores(data.newScores);
             setTurn(data.nextTurn);
             
-            // ලකුණක් ලැබුණොත් බෝඩ් එක Reset කිරීම
+            // ලකුණක් ලැබුණොත් හෝ Grid එක පිරුණොත් බෝඩ් එක Reset කිරීම
             if (data.isScored) {
                 setTimeout(() => setGrid(Array(9).fill(null)), 600);
             }
@@ -51,6 +51,9 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         const newGrid = [...grid];
         newGrid[index] = selectedLetter;
         const isScored = checkWin(newGrid);
+        
+        // පේළියක් සම්පූර්ණ නොවී Grid එක පිරී ඇත්දැයි බැලීම (Draw check)
+        const isFull = newGrid.every(cell => cell !== null);
 
         let nextScores = { ...scores };
         if (isScored) {
@@ -71,10 +74,11 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
 
         socket.emit('make_move', {
             gameId: gameData.gameId,
-            newGrid,
+            // පේළියක් සම්පූර්ණ වුණොත් හෝ Grid එක පිරුණොත් සර්වර් එකට reset signal එක යවනවා
+            newGrid: (isScored || (isFull && !isScored)) ? Array(9).fill(null) : newGrid,
             newScores: nextScores,
             nextTurn: isScored ? user.username : (turn === gameData.player_v ? gameData.player_o : gameData.player_v),
-            isScored
+            isScored: isScored || (isFull && !isScored)
         });
     };
 
