@@ -1,229 +1,174 @@
-/* ප්‍රධාන පසුබිම සහ පිරිසැලසුම */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap');
+
+/* Main Background */
+.main-container {
+    background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1b 100%);
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+}
+
 .board-wrapper {
+    width: 100%;
+    max-width: 500px;
+    height: 95vh;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 95%; /* Mobile වලදී දෙපැත්තෙන් ඉඩ තැබීමට */
-    max-width: 450px;
-    margin: 10px auto;
-    gap: clamp(10px, 3vh, 25px); /* Screen size අනුව gap එක වෙනස් වේ */
-    padding: 10px;
+    justify-content: space-between;
+    padding: 20px;
     box-sizing: border-box;
 }
 
-/* Score Board */
+/* Logo */
+.game-header { text-align: center; }
+.logo-text {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 900;
+    letter-spacing: 5px;
+    font-size: 1.8rem;
+    margin: 0;
+}
+.logo-text span { color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
+
+/* Modern Scores */
 .modern-scores {
     display: flex;
-    width: 100%;
-    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
-.player-box {
-    flex: 1;
-    padding: clamp(10px, 2vh, 15px);
+.player-card {
     background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    border-radius: 16px;
+    padding: 15px 25px;
+    border-radius: 20px;
     text-align: center;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 100px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.4s;
 }
 
-.player-box span {
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-}
-
-.active-turn {
+.player-card.active {
+    background: rgba(0, 210, 255, 0.1);
     border-color: #00d2ff;
-    background: rgba(0, 210, 255, 0.15);
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.3);
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
     transform: translateY(-5px);
 }
 
-.score-val {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    font-weight: 800;
-    color: #fff;
-    text-shadow: 0 0 10px #00d2ff;
-}
+.p-name { font-size: 0.8rem; text-transform: uppercase; color: #aaa; }
+.p-score { font-size: 2.2rem; font-weight: 900; font-family: 'Orbitron', sans-serif; }
+.score-divider { font-size: 2rem; font-weight: 900; color: #00d2ff; }
 
-/* S/O Selector */
-.selection {
+/* The Grid */
+.grid-container {
+    width: 100%;
     display: flex;
-    gap: clamp(15px, 5vw, 25px);
+    justify-content: center;
 }
 
-.selection button {
-    width: clamp(55px, 15vw, 70px);
-    height: clamp(55px, 15vw, 70px);
-    font-size: 1.5rem;
-    font-weight: 900;
-    border-radius: 15px;
-    border: 2px solid rgba(255, 255, 255, 0.1);
-    background: rgba(255, 255, 255, 0.05);
-    color: white;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.selection button.sel {
-    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-    color: white;
-    border-color: #00d2ff;
-    box-shadow: 0 0 15px rgba(0, 210, 255, 0.5);
-    transform: scale(1.1);
-}
-
-/* 3x3 Grid - සම්පූර්ණයෙන්ම Responsive */
 .grid-3x3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 100%;
-    aspect-ratio: 1 / 1; /* බෝඩ් එක සෑම විටම සමචතුරස්‍රයක් ලෙස තබයි */
-    gap: clamp(8px, 2vw, 12px);
-    background: rgba(255, 255, 255, 0.03);
-    padding: clamp(10px, 3vw, 20px);
-    border-radius: 24px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.2);
+    width: 90vw;
+    max-width: 360px;
+    aspect-ratio: 1/1;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
 }
 
 .cell-item {
-    background: rgba(255, 255, 255, 0.07);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: clamp(10px, 2vw, 15px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: clamp(1.8rem, 8vw, 2.8rem);
+    font-size: 3rem;
     font-weight: 900;
-    color: white;
     cursor: pointer;
-    transition: all 0.2s ease;
-    user-select: none;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
-.cell-item:hover:not(.filled) {
-    background: rgba(255, 255, 255, 0.15);
+.cell-item:hover { background: rgba(255, 255, 255, 0.1); }
+
+/* Signature S Style */
+.signature-s {
+    font-family: 'Dancing Script', cursive; /* විශේෂ Hand-written font එකක් */
+    color: #ffd700; /* Gold color */
+    text-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5);
+    filter: drop-shadow(0 0 5px gold);
 }
 
-.cell-item.filled {
-    background: rgba(255, 255, 255, 0.12);
-    cursor: default;
-    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+.s-glow { color: #ffd700; }
+.o-glow { color: #00d2ff; text-shadow: 0 0 15px #00d2ff; }
 
-@keyframes popIn {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.cell-item:active { transform: scale(0.9); }
-
-/* Status Message */
-.info-msg {
-    color: #00d2ff;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    font-size: 0.85rem;
-    animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* Finish Overlay (VS Screen) */
-.finish-overlay {
-    position: fixed; 
-    inset: 0;
-    background: rgba(10, 10, 25, 0.95);
-    backdrop-filter: blur(10px);
-    display: flex; 
-    justify-content: center; 
+/* Selection Bar */
+.footer-controls {
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    z-index: 2000;
-    padding: 20px;
+    gap: 15px;
+}
+
+.selection-bar {
+    display: flex;
+    gap: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px 25px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.selection-bar button {
+    background: none; border: none; color: #555;
+    font-size: 1.8rem; font-weight: 900; cursor: pointer;
+    transition: 0.3s; font-family: 'Orbitron', sans-serif;
+}
+
+.selection-bar button.sel {
+    color: #00d2ff;
+    text-shadow: 0 0 10px #00d2ff;
+    transform: scale(1.3);
+}
+
+.turn-indicator {
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: #00d2ff;
+    animation: blink 1.5s infinite;
+}
+
+@keyframes blink { 50% { opacity: 0.4; } }
+
+/* Results Screen */
+.finish-overlay {
+    position: fixed; inset: 0; background: rgba(10, 10, 20, 0.98);
+    display: flex; justify-content: center; align-items: center; z-index: 9999;
 }
 
 .vs-card {
-    background: #1a1a2e;
-    padding: clamp(20px, 5vw, 40px);
-    border-radius: 32px;
-    text-align: center;
-    border: 1px solid #00d2ff;
-    width: 100%;
-    max-width: 380px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    background: #1e1e30; padding: 40px; border-radius: 40px;
+    border: 2px solid #00d2ff; text-align: center; width: 85%; max-width: 400px;
+    box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
 }
 
-.vs-stats { 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    margin: clamp(15px, 4vh, 30px) 0; 
-}
-
-.player-stat h3 {
-    font-size: 0.9rem;
-    margin-bottom: 5px;
-    color: #ccc;
-}
-
-.big-score { 
-    font-size: clamp(2.5rem, 10vw, 3.5rem); 
-    font-weight: 900; 
-    color: #00d2ff; 
-}
-
-.vs-badge { 
-    background: linear-gradient(135deg, #ff4b2b, #ff416c);
-    color: white; 
-    width: 45px;
-    height: 45px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%; 
-    font-weight: bold;
-    font-size: 0.8rem;
-    box-shadow: 0 0 15px rgba(255, 75, 43, 0.4);
-}
-
-.winner-tag { 
-    color: #2ecc71; 
-    margin-bottom: 25px; 
-    font-size: clamp(1.2rem, 5vw, 1.6rem);
-    text-transform: uppercase;
-}
-
-.home-btn { 
+.rematch-btn {
     background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-    border: none; 
-    padding: 14px 40px; 
-    border-radius: 14px; 
-    color: white;
-    font-weight: bold; 
-    cursor: pointer; 
-    width: 100%;
-    font-size: 1rem;
-    transition: 0.3s;
+    border: none; padding: 15px 40px; border-radius: 15px;
+    color: white; font-weight: bold; cursor: pointer; width: 100%;
 }
 
-.home-btn:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
-}
-
-/* Glow Text Effect */
-.glow-text {
-    font-size: 1.2rem;
-    letter-spacing: 3px;
-    color: #fff;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+/* Responsive */
+@media (max-width: 400px) {
+    .cell-item { font-size: 2.5rem; }
+    .grid-3x3 { gap: 10px; padding: 15px; }
 }

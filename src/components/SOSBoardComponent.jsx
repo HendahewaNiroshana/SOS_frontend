@@ -9,13 +9,10 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
     const [results, setResults] = useState(null);
 
     useEffect(() => {
-        // සර්වර් එකෙන් එන දත්ත ලබා ගැනීම
         socket.on('receive_move', (data) => {
             setGrid(data.newGrid);
             setScores(data.newScores);
             setTurn(data.nextTurn);
-            
-            // ලකුණක් ලැබුණොත් හෝ Grid එක පිරුණොත් බෝඩ් එක Reset කිරීම
             if (data.isScored) {
                 setTimeout(() => setGrid(Array(9).fill(null)), 600);
             }
@@ -31,12 +28,11 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         };
     }, [socket]);
 
-    // SOS හෝ එකම අකුරේ ලයින් එකක් තිබේදැයි බැලීම
     const checkWin = (newGrid) => {
         const lines = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], // හරස් අතට
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], // සිරස් අතට
-            [0, 4, 8], [2, 4, 6]             // ඇලයට
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
         ];
         for (let l of lines) {
             const [a, b, c] = l;
@@ -51,8 +47,6 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         const newGrid = [...grid];
         newGrid[index] = selectedLetter;
         const isScored = checkWin(newGrid);
-        
-        // පේළියක් සම්පූර්ණ නොවී Grid එක පිරී ඇත්දැයි බැලීම (Draw check)
         const isFull = newGrid.every(cell => cell !== null);
 
         let nextScores = { ...scores };
@@ -61,7 +55,6 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
             nextScores[role] += 1;
         }
 
-        // ලකුණු 3ක් ගත්තොත් ජයග්‍රාහකයා තීරණය කිරීම
         if (nextScores.host >= 3 || nextScores.opponent >= 3) {
             const winner = nextScores.host > nextScores.opponent ? gameData.player_v : gameData.player_o;
             socket.emit('game_over_save', {
@@ -74,7 +67,6 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
 
         socket.emit('make_move', {
             gameId: gameData.gameId,
-            // පේළියක් සම්පූර්ණ වුණොත් හෝ Grid එක පිරුණොත් සර්වර් එකට reset signal එක යවනවා
             newGrid: (isScored || (isFull && !isScored)) ? Array(9).fill(null) : newGrid,
             newScores: nextScores,
             nextTurn: isScored ? user.username : (turn === gameData.player_v ? gameData.player_o : gameData.player_v),
@@ -82,7 +74,6 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         });
     };
 
-    // Game Over Screen
     if (results) {
         return (
             <div className="finish-overlay">
@@ -100,48 +91,55 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
                         </div>
                     </div>
                     <h1 className="winner-tag">{results.winner} WON! 🏆</h1>
-                    <button className="home-btn" onClick={() => window.location.reload()}>REMATCH</button>
+                    <button className="rematch-btn" onClick={() => window.location.reload()}>PLAY AGAIN</button>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="board-wrapper">
-            {/* Score Board */}
-            <div className="modern-scores">
-                <div className={`player-box ${turn === gameData.player_v ? 'active-turn' : ''}`}>
-                    <span>{gameData.player_v}</span>
-                    <div className="score-val">{scores.host}</div>
-                </div>
-                <div className={`player-box ${turn === gameData.player_o ? 'active-turn' : ''}`}>
-                    <span>{gameData.player_o}</span>
-                    <div className="score-val">{scores.opponent}</div>
-                </div>
-            </div>
+        <div className="main-container">
+            <div className="board-wrapper">
+                <header className="game-header">
+                    <h1 className="logo-text">SOS <span>ONLINE</span></h1>
+                </header>
 
-            {/* S or O Selector */}
-            <div className="selection">
-                <button className={selectedLetter === 'S' ? 'sel' : ''} onClick={() => setSelectedLetter('S')}>S</button>
-                <button className={selectedLetter === 'O' ? 'sel' : ''} onClick={() => setSelectedLetter('O')}>O</button>
-            </div>
-
-            {/* 3x3 Grid */}
-            <div className="grid-3x3">
-                {grid.map((cell, i) => (
-                    <div 
-                        key={i} 
-                        className={`cell-item ${cell ? 'filled' : ''}`} 
-                        onClick={() => handleMove(i)}
-                    >
-                        {cell}
+                <div className="modern-scores">
+                    <div className={`player-card ${turn === gameData.player_v ? 'active' : ''}`}>
+                        <span className="p-name">{gameData.player_v}</span>
+                        <div className="p-score">{scores.host}</div>
                     </div>
-                ))}
-            </div>
+                    <div className="score-divider">:</div>
+                    <div className={`player-card ${turn === gameData.player_o ? 'active' : ''}`}>
+                        <span className="p-name">{gameData.player_o}</span>
+                        <div className="p-score">{scores.opponent}</div>
+                    </div>
+                </div>
 
-            <p className="info-msg">
-                {turn === user.username ? "🔥 YOUR TURN" : "⌛ WAITING FOR OPPONENT..."}
-            </p>
+                <div className="grid-container">
+                    <div className="grid-3x3">
+                        {grid.map((cell, i) => (
+                            <div 
+                                key={i} 
+                                className={`cell-item ${cell ? 'filled' : ''} ${cell === 'S' ? 's-glow' : 'o-glow'}`} 
+                                onClick={() => handleMove(i)}
+                            >
+                                <span className={cell === 'S' ? 'signature-s' : ''}>{cell}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="footer-controls">
+                    <div className="selection-bar">
+                        <button className={selectedLetter === 'S' ? 'sel' : ''} onClick={() => setSelectedLetter('S')}>S</button>
+                        <button className={selectedLetter === 'O' ? 'sel' : ''} onClick={() => setSelectedLetter('O')}>O</button>
+                    </div>
+                    <p className="turn-indicator">
+                        {turn === user.username ? "⚡ YOUR TURN" : "⌛ OPPONENT'S TURN"}
+                    </p>
+                </div>
+            </div>
         </div>
     );
 };
