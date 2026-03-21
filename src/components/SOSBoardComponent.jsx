@@ -99,18 +99,18 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
 
     return (
         <div className="main-container">
-            <div className="board-wrapper">
+            <div className="compact-board">
                 <header className="game-header">
                     <h1 className="logo-text">SOS <span>ONLINE</span></h1>
                 </header>
 
                 <div className="modern-scores">
-                    <div className={`player-card ${turn === gameData.player_v ? 'active' : ''}`}>
+                    <div className={`player-card neon-box ${turn === gameData.player_v ? 'active' : ''}`}>
                         <span className="p-name">{gameData.player_v}</span>
                         <div className="p-score">{scores.host}</div>
                     </div>
                     <div className="score-divider">:</div>
-                    <div className={`player-card ${turn === gameData.player_o ? 'active' : ''}`}>
+                    <div className={`player-card neon-box ${turn === gameData.player_o ? 'active' : ''}`}>
                         <span className="p-name">{gameData.player_o}</span>
                         <div className="p-score">{scores.opponent}</div>
                     </div>
@@ -131,7 +131,7 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
                 </div>
 
                 <div className="footer-controls">
-                    <div className="selection-bar">
+                    <div className="selection-bar neon-boundary">
                         <button className={selectedLetter === 'S' ? 'sel' : ''} onClick={() => setSelectedLetter('S')}>S</button>
                         <button className={selectedLetter === 'O' ? 'sel' : ''} onClick={() => setSelectedLetter('O')}>O</button>
                     </div>

@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600&family=Dancing+Script:wght@700&display=swap');
 
-/* Main Background */
+/* Main Background with Smooth Gradient */
 .main-container {
-    background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1b 100%);
+    background: linear-gradient(145deg, #101020 0%, #1a1a3a 50%, #080810 100%);
     min-height: 100vh;
     width: 100%;
     display: flex;
@@ -13,15 +13,17 @@
     font-family: 'Poppins', sans-serif;
 }
 
-.board-wrapper {
+/* Compact Board Layout */
+.compact-board {
     width: 100%;
-    max-width: 500px;
-    height: 95vh;
+    max-width: 480px;
+    height: 85vh; /* උස අඩු කළා */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 20px;
+    justify-content: space-around; /* බෙදාහැරීම ක්‍රමවත් කළා */
+    padding: 15px; /* Padding අඩු කළා */
     box-sizing: border-box;
+    gap: 10px; /* Gaps අඩු කළා */
 }
 
 /* Logo */
@@ -29,40 +31,40 @@
 .logo-text {
     font-family: 'Orbitron', sans-serif;
     font-weight: 900;
-    letter-spacing: 5px;
-    font-size: 1.8rem;
+    letter-spacing: 4px;
+    font-size: 1.6rem;
     margin: 0;
 }
-.logo-text span { color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
+.logo-text span { color: #00d2ff; text-shadow: 0 0 8px #00d2ff; }
 
-/* Modern Scores */
+/* Modern Scores with Neon Box */
 .modern-scores {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
 }
 
-.player-card {
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px 25px;
-    border-radius: 20px;
+.neon-box {
+    background: rgba(10, 10, 20, 0.6);
+    padding: 10px 20px; /* Padding අඩු කළා */
+    border-radius: 15px;
     text-align: center;
-    min-width: 100px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-width: 90px;
+    border: 2px solid rgba(0, 210, 255, 0.2); /* Neon Boundary */
     transition: 0.4s;
+    backdrop-filter: blur(5px);
 }
 
-.player-card.active {
-    background: rgba(0, 210, 255, 0.1);
+.neon-box.active {
     border-color: #00d2ff;
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.2);
-    transform: translateY(-5px);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3), inset 0 0 10px rgba(0, 210, 255, 0.1);
+    transform: translateY(-3px);
 }
 
-.p-name { font-size: 0.8rem; text-transform: uppercase; color: #aaa; }
-.p-score { font-size: 2.2rem; font-weight: 900; font-family: 'Orbitron', sans-serif; }
-.score-divider { font-size: 2rem; font-weight: 900; color: #00d2ff; }
+.p-name { font-size: 0.75rem; text-transform: uppercase; color: #888; letter-spacing: 1px; }
+.p-score { font-size: 2rem; font-weight: 900; font-family: 'Orbitron', sans-serif; color: #fff; text-shadow: 0 0 5px #fff; }
+.score-divider { font-size: 1.8rem; font-weight: 900; color: #00d2ff; }
 
 /* The Grid */
 .grid-container {
@@ -74,101 +76,103 @@
 .grid-3x3 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    width: 90vw;
-    max-width: 360px;
+    width: 85vw;
+    max-width: 320px; /* Grid එක පොඩ්ඩක් කුඩා කළා */
     aspect-ratio: 1/1;
-    gap: 15px;
-    background: rgba(255, 255, 255, 0.02);
-    padding: 20px;
-    border-radius: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
+    gap: 10px; /* Gap අඩු කළා */
+    background: rgba(255, 255, 255, 0.01);
+    padding: 15px;
+    border-radius: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(8px);
 }
 
 .cell-item {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: 2.8rem; /* Font size පොඩ්ඩක් අඩු කළා */
     font-weight: 900;
     cursor: pointer;
-    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    transition: 0.2s;
+    border: 1px solid rgba(255, 255, 255, 0.02);
 }
 
-.cell-item:hover { background: rgba(255, 255, 255, 0.1); }
+.cell-item:hover { background: rgba(255, 255, 255, 0.08); }
 
-/* Signature S Style */
+/* Signature S Style with Gold */
 .signature-s {
-    font-family: 'Dancing Script', cursive; /* විශේෂ Hand-written font එකක් */
-    color: #ffd700; /* Gold color */
-    text-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5);
-    filter: drop-shadow(0 0 5px gold);
+    font-family: 'Dancing Script', cursive;
+    color: #ffd700;
+    text-shadow: 0 0 10px #ffd700, 0 0 20px rgba(255, 215, 0, 0.4);
 }
 
 .s-glow { color: #ffd700; }
-.o-glow { color: #00d2ff; text-shadow: 0 0 15px #00d2ff; }
+.o-glow { color: #00d2ff; text-shadow: 0 0 10px #00d2ff; }
 
-/* Selection Bar */
+/* Selection Bar with Neon Boundary */
 .footer-controls {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
-.selection-bar {
+.neon-boundary {
     display: flex;
-    gap: 20px;
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px 25px;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    gap: 15px;
+    background: rgba(5, 5, 10, 0.7);
+    padding: 8px 20px; /* Padding අඩු කළා */
+    border-radius: 40px;
+    border: 2px solid rgba(0, 210, 255, 0.2);
 }
 
-.selection-bar button {
-    background: none; border: none; color: #555;
-    font-size: 1.8rem; font-weight: 900; cursor: pointer;
+.neon-boundary button {
+    background: none; border: none; color: #444;
+    font-size: 1.6rem; font-weight: 900; cursor: pointer;
     transition: 0.3s; font-family: 'Orbitron', sans-serif;
 }
 
-.selection-bar button.sel {
+.neon-boundary button.sel {
     color: #00d2ff;
-    text-shadow: 0 0 10px #00d2ff;
-    transform: scale(1.3);
+    text-shadow: 0 0 8px #00d2ff;
+    transform: scale(1.2);
 }
 
 .turn-indicator {
-    font-size: 0.9rem;
-    letter-spacing: 2px;
+    font-size: 0.8rem;
+    letter-spacing: 1.5px;
     color: #00d2ff;
-    animation: blink 1.5s infinite;
+    margin: 0;
+    animation: blink 2s infinite;
 }
 
-@keyframes blink { 50% { opacity: 0.4; } }
+@keyframes blink { 50% { opacity: 0.3; } }
 
-/* Results Screen */
+/* Results Screen (VS Card) */
 .finish-overlay {
-    position: fixed; inset: 0; background: rgba(10, 10, 20, 0.98);
+    position: fixed; inset: 0; background: rgba(5, 5, 10, 0.98);
     display: flex; justify-content: center; align-items: center; z-index: 9999;
+    backdrop-filter: blur(10px);
 }
 
 .vs-card {
-    background: #1e1e30; padding: 40px; border-radius: 40px;
-    border: 2px solid #00d2ff; text-align: center; width: 85%; max-width: 400px;
-    box-shadow: 0 0 50px rgba(0, 210, 255, 0.2);
+    background: #101020; padding: 30px; border-radius: 35px;
+    border: 2px solid #00d2ff; text-align: center; width: 80%; max-width: 360px;
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.2);
 }
 
 .rematch-btn {
     background: linear-gradient(135deg, #00d2ff, #3a7bd5);
-    border: none; padding: 15px 40px; border-radius: 15px;
+    border: none; padding: 12px 35px; border-radius: 12px;
     color: white; font-weight: bold; cursor: pointer; width: 100%;
 }
 
-/* Responsive */
-@media (max-width: 400px) {
-    .cell-item { font-size: 2.5rem; }
-    .grid-3x3 { gap: 10px; padding: 15px; }
+/* Responsive fixes for small devices */
+@media (max-width: 380px) {
+    .grid-3x3 { max-width: 280px; gap: 8px; padding: 10px; }
+    .cell-item { font-size: 2.2rem; border-radius: 14px; }
+    .neon-box { padding: 8px 15px; min-width: 80px; }
 }
