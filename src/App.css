@@ -1,167 +1,162 @@
-/* මුළු App එකටම පොදු Reset එකක් */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+
+/* --- මුළු App එකටම පොදු Reset එකක් --- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Poppins', 'Segoe UI', sans-serif; /* වඩාත් නවීන පෙනුමක් සඳහා */
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
-  /* Matte Blue Gradient පසුබිම මුළු Screen එකටම */
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  /* වඩාත් Premium Dark Gradient එකක් */
+  background: radial-gradient(circle at top, #1a1a3a 0%, #0f0f1b 100%);
   background-attachment: fixed;
   color: #fff;
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* උඩ සිට පටන් ගැනීමට */
+  align-items: flex-start; 
   overflow-x: hidden;
 }
 
 .App {
   width: 100%;
-  /* Desktop වලදී ඕනෑවට වඩා පළල නොවී මැදට වන්නට */
-  max-width: 600px; 
+  max-width: 500px; /* Board එකේ පළලට ගැලපෙන සේ අඩු කළා */
   min-height: 100vh;
   margin: 0 auto;
-  padding: 15px;
+  padding: 10px; /* Padding අඩු කර Compact කළා */
   display: flex;
   flex-direction: column;
 }
 
-/* --- Navbar (Glassmorphism Effect) --- */
+/* --- Navbar (Sleek Glassmorphism) --- */
 .top-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 15px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  margin-bottom: 20px; /* ඉඩ අඩු කළා */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .top-nav h1 {
-  font-size: clamp(1rem, 5vw, 1.4rem); /* Screen එක අනුව අකුරු වෙනස් වේ */
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(0.9rem, 4vw, 1.2rem);
   font-weight: 700;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   color: #00d2ff;
-  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.5);
 }
 
 .user-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .user-info span {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 500;
-  opacity: 0.9;
+  color: #ccc;
 }
 
 .user-info button {
-  background: #ff4b2b;
+  background: linear-gradient(135deg, #ff4b2b, #ff416c);
   border: none;
   color: white;
-  padding: 8px 15px;
-  border-radius: 8px;
-  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.75rem;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 75, 43, 0.3);
 }
 
 .user-info button:hover {
-  background: #ff416c;
-  transform: scale(1.05);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 75, 43, 0.5);
 }
 
 /* --- Menu Grid (Home Page) --- */
 .menu-grid {
   display: grid;
-  /* කුඩා mobile වලදී පේළියට එකයි, ටැබ්ලට් වලදී පේළියට දෙකයි */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); /* වඩාත් Compact කළා */
+  gap: 15px;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  height: 160px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 130px; /* උස අඩු කළා */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #fff;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  padding: 20px;
+  border-radius: 24px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  padding: 15px;
+  text-align: center;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-8px) scale(1.02);
+  background: rgba(0, 210, 255, 0.1);
   border-color: #00d2ff;
+  box-shadow: 0 15px 30px rgba(0, 210, 255, 0.2);
 }
 
-.card:active {
-  transform: scale(0.95);
+.card h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
 }
 
 /* --- Universal Buttons --- */
 button:disabled {
-  background-color: #636e72 !important;
+  background: #2d3436 !important;
   cursor: not-allowed;
-  opacity: 0.6;
+  opacity: 0.5;
+  transform: none !important;
 }
 
-/* --- Media Queries (Devices ගැලපීම සඳහා) --- */
+/* --- Media Queries --- */
 
-/* මධ්‍යම ප්‍රමාණයේ Screen (Tablets) */
 @media (max-width: 600px) {
   .App {
-    padding: 10px;
+    padding: 8px;
   }
   
   .menu-grid {
-    grid-template-columns: 1fr; /* පේළියට එක බැගින් */
+    grid-template-columns: repeat(2, 1fr); /* Mobile වලදී පේළියට දෙකක් */
   }
 
   .card {
-    height: 120px;
+    height: 110px;
   }
 }
 
-/* ඉතා කුඩා Screen (Small Mobiles) */
 @media (max-width: 400px) {
   .top-nav {
-    padding: 12px;
+    padding: 10px 15px;
   }
 
   .user-info span {
-    display: none; /* ඉඩ මදි නිසා නම හංගන්න */
+    display: none; /* කුඩා ෆෝන් වල නම සඟවයි */
   }
 
-  .sos-grid {
-    /* Grid එක Screen එකෙන් එළියට නොයන ලෙස සකස් කිරීම */
-    grid-template-columns: repeat(3, minmax(80px, 1fr));
+  .menu-grid {
     gap: 10px;
   }
 
-  .cell {
-    width: 100%; /* ඉඩ අනුව ස්වයංක්‍රීයව හැදේ */
-    height: 85px;
-  }
+  .logo-text { font-size: 1.4rem; }
 }

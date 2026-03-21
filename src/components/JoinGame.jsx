@@ -22,17 +22,12 @@ const JoinGame = ({ user, socket, onJoinSuccess }) => {
             const data = await res.json();
 
             if (res.ok) {
-                // 1. මුලින්ම Socket room එකට Join වෙන්න
                 socket.emit('join_room', gid);
-
-                // 2. තත්පරයකින් 1/10ක් පමණ ඉඳලා Host ට signal එක යවන්න (Race condition fix)
                 setTimeout(() => {
                     socket.emit('player_joined', { gameId: gid, username: user.username });
-                    
-                    // 3. Joiner ව Board එකට මාරු කරන්න
                     onJoinSuccess({
                         gameId: gid,
-                        player_v: data.gameData.player_v, // Host ගේ නම DB එකෙන් එනවා
+                        player_v: data.gameData.player_v,
                         player_o: user.username
                     });
                 }, 200);
@@ -47,19 +42,27 @@ const JoinGame = ({ user, socket, onJoinSuccess }) => {
     };
 
     return (
-        <div className="join-card">
-            <h2>Join a Game</h2>
-            <form onSubmit={handleJoin}>
+        <div className="join-card neon-wrapper">
+            <h2 className="glow-text-blue">Join Battle</h2>
+            <p className="subtitle">Enter the 6-digit room code to start</p>
+            
+            <form onSubmit={handleJoin} className="join-form">
                 <input 
                     type="text" 
-                    placeholder="ENTER 6-DIGIT ID" 
+                    placeholder="CODE23" 
                     maxLength="6"
                     value={inputID}
-                    onChange={(e) => setInputID(e.target.value)}
-                    className="join-input"
+                    // මෙතැනදී අකුරු auto-capitalization සිදු වේ
+                    onChange={(e) => setInputID(e.target.value.toUpperCase())} 
+                    className="join-input-modern"
                 />
-                <button type="submit" className="join-btn" disabled={loading}>
-                    {loading ? "Joining..." : "START PLAYING"}
+                
+                <button type="submit" className="join-btn-modern" disabled={loading}>
+                    {loading ? (
+                        <div className="btn-loader"></div>
+                    ) : (
+                        "ENTER ARENA"
+                    )}
                 </button>
             </form>
         </div>
