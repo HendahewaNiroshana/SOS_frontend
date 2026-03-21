@@ -1,0 +1,120 @@
+/* මුළු පසුබිමම මැට් නිල් පැහැයෙන් යුත් gradient එකක් */
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    padding: 20px;
+}
+
+/* Glassmorphism Effect එක සහිත කාඩ්පත */
+.auth-box {
+    width: 100%;
+    max-width: 380px;
+    padding: 40px 30px;
+    background: rgba(255, 255, 255, 0.1); /* විනිවිද පෙනෙන සුදු පැහැය */
+    backdrop-filter: blur(15px); /* පිටුපස ඇති දේ බොඳ කරන 'Glass' effect එක */
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.2); /* වීදුරු දාරයක් වැනි පෙනුම */
+    border-radius: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: #ffffff;
+}
+
+.auth-box h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* Input Fields */
+.auth-box form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    outline: none;
+    transition: 0.3s all ease;
+}
+
+.auth-box input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.auth-box input:focus {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: #00d2ff; /* Focus වීමේදී ලැබෙන නිල් පැහැති ආලෝකය */
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+}
+
+/* Button Design */
+.auth-box button {
+    width: 100%;
+    padding: 15px;
+    margin-top: 10px;
+    background: #00d2ff; /* තද නිල් පසුබිමට ගැලපෙන කැපී පෙනෙන නිල් පාට */
+    background: linear-gradient(to right, #00d2ff, #3a7bd5);
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0, 210, 255, 0.3);
+}
+
+.auth-box button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 210, 255, 0.5);
+}
+
+.auth-box button:active {
+    transform: translateY(0);
+}
+
+.auth-box button:disabled {
+    background: #666;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Register/Login මාරු කරන Link එක */
+.auth-box p {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-box p:hover {
+    color: #00d2ff;
+    text-decoration: underline;
+}
+
+/* Mobile Devices සඳහා අමතර ගැලපීම් */
+@media (max-width: 480px) {
+    .auth-box {
+        padding: 30px 20px;
+        max-width: 100%;
+    }
+    
+    .auth-box h2 {
+        font-size: 1.6rem;
+    }
+}

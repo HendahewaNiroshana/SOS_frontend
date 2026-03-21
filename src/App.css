@@ -1,0 +1,167 @@
+/* මුළු App එකටම පොදු Reset එකක් */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'Segoe UI', sans-serif; /* වඩාත් නවීන පෙනුමක් සඳහා */
+}
+
+body {
+  /* Matte Blue Gradient පසුබිම මුළු Screen එකටම */
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background-attachment: fixed;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* උඩ සිට පටන් ගැනීමට */
+  overflow-x: hidden;
+}
+
+.App {
+  width: 100%;
+  /* Desktop වලදී ඕනෑවට වඩා පළල නොවී මැදට වන්නට */
+  max-width: 600px; 
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Navbar (Glassmorphism Effect) --- */
+.top-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  margin-bottom: 30px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.top-nav h1 {
+  font-size: clamp(1rem, 5vw, 1.4rem); /* Screen එක අනුව අකුරු වෙනස් වේ */
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #00d2ff;
+  text-transform: uppercase;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-info span {
+  font-size: 0.9rem;
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.user-info button {
+  background: #ff4b2b;
+  border: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.user-info button:hover {
+  background: #ff416c;
+  transform: scale(1.05);
+}
+
+/* --- Menu Grid (Home Page) --- */
+.menu-grid {
+  display: grid;
+  /* කුඩා mobile වලදී පේළියට එකයි, ටැබ්ලට් වලදී පේළියට දෙකයි */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 20px;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #00d2ff;
+}
+
+.card:active {
+  transform: scale(0.95);
+}
+
+/* --- Universal Buttons --- */
+button:disabled {
+  background-color: #636e72 !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* --- Media Queries (Devices ගැලපීම සඳහා) --- */
+
+/* මධ්‍යම ප්‍රමාණයේ Screen (Tablets) */
+@media (max-width: 600px) {
+  .App {
+    padding: 10px;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr; /* පේළියට එක බැගින් */
+  }
+
+  .card {
+    height: 120px;
+  }
+}
+
+/* ඉතා කුඩා Screen (Small Mobiles) */
+@media (max-width: 400px) {
+  .top-nav {
+    padding: 12px;
+  }
+
+  .user-info span {
+    display: none; /* ඉඩ මදි නිසා නම හංගන්න */
+  }
+
+  .sos-grid {
+    /* Grid එක Screen එකෙන් එළියට නොයන ලෙස සකස් කිරීම */
+    grid-template-columns: repeat(3, minmax(80px, 1fr));
+    gap: 10px;
+  }
+
+  .cell {
+    width: 100%; /* ඉඩ අනුව ස්වයංක්‍රීයව හැදේ */
+    height: 85px;
+  }
+}

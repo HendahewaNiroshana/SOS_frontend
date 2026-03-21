@@ -1,0 +1,120 @@
+/* ප්‍රධාන පසුබිම සහ පිරිසැලසුම */
+.board-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+/* Score Board */
+.modern-scores {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.player-box {
+    flex: 1;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    text-align: center;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+.active-turn {
+    border-color: #00d2ff;
+    background: rgba(0, 210, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.2);
+}
+
+.score-val {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #00d2ff;
+}
+
+/* S/O Selector */
+.selection {
+    display: flex;
+    gap: 15px;
+}
+
+.selection button {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    cursor: pointer;
+}
+
+.selection button.sel {
+    background: #00d2ff;
+    color: #1a1a2e;
+    border-color: #00d2ff;
+}
+
+/* 3x3 Grid - Responsive */
+.grid-3x3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    max-width: 350px;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cell-item {
+    aspect-ratio: 1 / 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+}
+
+.cell-item:active { transform: scale(0.9); }
+
+/* Status Message */
+.info-msg {
+    color: #00d2ff;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Finish Overlay (VS Screen) */
+.finish-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+}
+
+.vs-card {
+    background: linear-gradient(145deg, #1e3c72, #2a5298);
+    padding: 40px; border-radius: 30px; text-align: center;
+    border: 2px solid #00d2ff; width: 90%; max-width: 400px;
+}
+
+.vs-stats { display: flex; align-items: center; justify-content: space-around; margin: 20px 0; }
+.big-score { font-size: 4rem; font-weight: 900; color: #00d2ff; }
+.vs-badge { background: #ff4b2b; color: white; padding: 10px; border-radius: 50%; font-weight: bold; }
+.winner-tag { color: #2ecc71; margin-bottom: 20px; }
+.home-btn { background: #00d2ff; border: none; padding: 12px 30px; border-radius: 10px; font-weight: bold; cursor: pointer; }
