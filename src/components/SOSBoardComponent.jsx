@@ -7,14 +7,21 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
     const [scores, setScores] = useState({ host: 0, opponent: 0 });
     const [turn, setTurn] = useState(gameData.player_v);
     const [results, setResults] = useState(null);
+    
+    // Popup පාලනය කිරීමට අලුත් state එකක්
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupMsg, setPopupMsg] = useState("");
 
     useEffect(() => {
         socket.on('receive_move', (data) => {
             setGrid(data.newGrid);
             setScores(data.newScores);
             setTurn(data.nextTurn);
+            
+            // ලකුණක් ලැබුණොත් හෝ Draw වුණොත් Popup එක පෙන්වීම
             if (data.isScored) {
-                setTimeout(() => setGrid(Array(9).fill(null)), 600);
+                setPopupMsg(data.message || "POINT SCORED! 🔥");
+                setShowPopup(true);
             }
         });
 
@@ -41,8 +48,14 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         return false;
     };
 
+    // Popup එකේ OK Click කළාම Grid එක Clear කිරීම
+    const handlePopupClose = () => {
+        setGrid(Array(9).fill(null));
+        setShowPopup(false);
+    };
+
     const handleMove = (index) => {
-        if (turn !== user.username || grid[index] || results) return;
+        if (turn !== user.username || grid[index] || results || showPopup) return;
 
         const newGrid = [...grid];
         newGrid[index] = selectedLetter;
@@ -50,9 +63,14 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
         const isFull = newGrid.every(cell => cell !== null);
 
         let nextScores = { ...scores };
+        let msg = "";
+
         if (isScored) {
             const role = (user.username === gameData.player_v) ? 'host' : 'opponent';
             nextScores[role] += 1;
+            msg = `${user.username.toUpperCase()} SCORED! 🎯`;
+        } else if (isFull) {
+            msg = "IT'S A DRAW! 🤝";
         }
 
         if (nextScores.host >= 3 || nextScores.opponent >= 3) {
@@ -67,10 +85,12 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
 
         socket.emit('make_move', {
             gameId: gameData.gameId,
-            newGrid: (isScored || (isFull && !isScored)) ? Array(9).fill(null) : newGrid,
+            // සර්වර් එකට යවන විට grid එක එලෙසම යවා Popup එකෙන් පසුව reset කරයි
+            newGrid: newGrid, 
             newScores: nextScores,
             nextTurn: isScored ? user.username : (turn === gameData.player_v ? gameData.player_o : gameData.player_v),
-            isScored: isScored || (isFull && !isScored)
+            isScored: isScored || isFull,
+            message: msg
         });
     };
 
@@ -99,6 +119,17 @@ const SOSBoardComponent = ({ gameData, user, socket }) => {
 
     return (
         <div className="main-container">
+            {/* Round Success Popup */}
+            {showPopup && (
+                <div className="popup-overlay">
+                    <div className="modern-popup neon-boundary">
+                        <div className="confetti-icon">🎉</div>
+                        <h2>{popupMsg}</h2>
+                        <button className="popup-ok-btn" onClick={handlePopupClose}>CONTINUE</button>
+                    </div>
+                </div>
+            )}
+
             <div className="compact-board">
                 <header className="game-header">
                     <h1 className="logo-text">SOS <span>ONLINE</span></h1>
