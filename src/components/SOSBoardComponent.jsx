@@ -8,14 +8,11 @@ const SOSBoardComponent = ({ gameData, user }) => {
   const [scores, setScores] = useState({ host: 0, opponent: 0 });
   const [turn, setTurn] = useState(gameData.player_v);
   const [results, setResults] = useState(null);
-  
-  // Selected Column එක සටහන් කරගැනීමට (0, 1, හෝ 2)
   const [selectedColumn, setSelectedColumn] = useState(null);
 
   const [showPopup, setShowPopup] = useState(false);
   const [popupMsg, setPopupMsg] = useState("");
 
-  // Host ට 'S' ද, Opponent ට 'O' ද auto Assign කිරීම
   const isHost = user.username === gameData.player_v;
   const assignedLetter = isHost ? 'S' : 'O';
 
@@ -27,7 +24,18 @@ const SOSBoardComponent = ({ gameData, user }) => {
       const data = snapshot.val();
       if (!data) return;
 
-      setGrid(data.grid || Array(9).fill(null));
+      // 🔥 FIX: Firebase වෙතින් null අගයන් මගහැරුණත් සැමවිටම Index 0-8 දක්වා කොටු 9 සෑදීම
+      const rawGrid = data.grid || {};
+      const fullGrid = Array(9).fill(null);
+
+      // Raw data වලින් index 0-8 දක්වා අගයන් පිරවීම
+      for (let i = 0; i < 9; i++) {
+        if (rawGrid[i]) {
+          fullGrid[i] = rawGrid[i];
+        }
+      }
+
+      setGrid(fullGrid);
       setScores(data.scores || { host: 0, opponent: 0 });
       setTurn(data.turn);
 
@@ -61,31 +69,33 @@ const SOSBoardComponent = ({ gameData, user }) => {
     return false;
   };
 
-  // Popup එක ක්ලික් කළ විට Grid එක Reset කිරීම
   const handlePopupClose = () => {
     setShowPopup(false);
     setSelectedColumn(null);
     
+    // Grid එක Clean කිරීම සඳහා Object එකක් විදිහට null නොවන පරිදි Clear කිරීම
+    const resetGrid = {};
+    for (let i = 0; i < 9; i++) resetGrid[i] = "";
+
     update(ref(db, `games/${gameData.gameId}`), {
-      grid: Array(9).fill(null),
+      grid: resetGrid,
       isScored: false,
       message: ""
     });
   };
 
   const handleMove = async (index) => {
+    // 이미 අකුරක් ඇත්නම් හෝ වාරය නොවේ නම් වැළැක්වීම
     if (turn !== user.username || grid[index] || results || showPopup) return;
 
-    // Direct assignedLetter (S හෝ O) එක Grid එකට ඇතුළත් කිරීම
     const newGrid = [...grid];
     newGrid[index] = assignedLetter;
 
-    // Selected Cell එක පිහිටි Column එක Highlight කිරීම (0, 1, හෝ 2)
     const colIndex = index % 3;
     setSelectedColumn(colIndex);
 
     const isScored = checkWin(newGrid);
-    const isFull = newGrid.every(cell => cell !== null);
+    const isFull = newGrid.every(cell => cell !== null && cell !== "");
 
     let nextScores = { ...scores };
     let msg = "";
@@ -105,8 +115,14 @@ const SOSBoardComponent = ({ gameData, user }) => {
 
     const nextTurnUser = isScored ? user.username : (turn === gameData.player_v ? gameData.player_o : gameData.player_v);
 
+    // Firebase එකට Object එකක් ලෙස Save කිරීම (Null values drop නොවීමට)
+    const gridToSave = {};
+    newGrid.forEach((val, idx) => {
+      gridToSave[idx] = val || "";
+    });
+
     await update(ref(db, `games/${gameData.gameId}`), {
-      grid: newGrid,
+      grid: gridToSave,
       scores: nextScores,
       turn: nextTurnUser,
       isScored: isScored || isFull,
@@ -167,6 +183,7 @@ const SOSBoardComponent = ({ gameData, user }) => {
           </div>
         </div>
 
+        {/* --- ALWAYS RENDERS EXACTLY 9 CELLS --- */}
         <div className="grid-container">
           <div className="grid-3x3">
             {grid.map((cell, i) => {
@@ -176,11 +193,11 @@ const SOSBoardComponent = ({ gameData, user }) => {
               return (
                 <div 
                   key={i} 
-                  className={`cell-item ${cell ? 'filled' : 'empty'} ${cell === 'S' ? 's-glow' : ''} ${cell === 'O' ? 'o-glow' : ''} ${isColSelected ? 'col-active' : ''}`} 
+                  className={`cell-item ${isColSelected ? 'col-active' : ''}`} 
                   onClick={() => handleMove(i)}
                 >
-                  <span className={cell === 'S' ? 'signature-s' : ''}>
-                    {cell || ''}
+                  <span className={cell === 'S' ? 'signature-s' : cell === 'O' ? 'o-glow' : ''}>
+                    {cell ? cell : ''}
                   </span>
                 </div>
               );
