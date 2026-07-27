@@ -16,7 +16,7 @@ const Home = ({ user, onLogout }) => {
     if (currentGameData?.gameId && view === 'create') {
       const gameRef = ref(db, `games/${currentGameData.gameId}`);
       
-      const unsubscribe = onValue(gameRef, (snapshot) => {
+      onValue(gameRef, (snapshot) => {
         const data = snapshot.val();
         if (data && data.player_o && data.status === 'playing') {
           setCurrentGameData(data);
@@ -24,6 +24,7 @@ const Home = ({ user, onLogout }) => {
         }
       });
 
+      // Listener එක Clean up කිරීම සඳහා එක return එකක් පමණක් යොදන්න
       return () => off(gameRef);
     }
   }, [currentGameData?.gameId, view]);
